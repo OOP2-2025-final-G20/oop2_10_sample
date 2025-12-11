@@ -34,6 +34,8 @@ peewee==3.17.7
 > このリポジトリのアプリを動作させるために行う手順を詳細に書いてください。
 
 ```bash
+$ python -m venv env
+$ source env/bin/activate
+$ pip install -r requirements.txt
 $ python app.py
-# Try accessing "http://localhost:8080" in your browser.
 ```
