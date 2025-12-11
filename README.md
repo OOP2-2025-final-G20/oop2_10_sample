@@ -1,4 +1,4 @@
-# OMS: OMS
+# OMS: OMS（Order Manegiment System）
 > アプリ名は、プロジェクトの顔でもあるので、適切な命名を行ってください。
 
 概要:
