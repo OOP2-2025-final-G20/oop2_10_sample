@@ -39,3 +39,7 @@ $ source env/bin/activate
 $ pip install -r requirements.txt
 $ python app.py
 ```
+
+プログラミングのルール<br>
+ブランチ名は各人の名簿番号にする<br>
+
