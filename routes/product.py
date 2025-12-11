@@ -1,8 +1,34 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
+from peewee import DoesNotExist
 from models import Product
 
 # Blueprintの作成
 product_bp = Blueprint('product', __name__, url_prefix='/products')
+
+
+# 新規追加：削除機能
+@product_bp.route('/delete/<int:product_id>', methods=['POST'])
+def delete(product_id):
+    """
+    指定された製品IDの製品をデータベースから削除する。
+    """
+    try:
+        # 製品を取得
+        product = Product.get_by_id(product_id)
+        name = product.name
+        
+        # 製品を削除
+        product.delete_instance()
+        
+        # 成功メッセージを設定
+        flash(f'製品「{name}」を削除しました。', 'success')
+        
+    except DoesNotExist:
+        # 製品が見つからなかった場合のエラーメッセージ
+        flash('指定された製品が見つかりません。', 'error')
+    
+    # 製品一覧画面にリダイレクト
+    return redirect(url_for('product.list'))
 
 
 @product_bp.route('/')
