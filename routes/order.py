@@ -21,6 +21,18 @@ def add():
         quantity = request.form['quantity']
  
         order_date = datetime.now()
+
+        order_date = datetime.now()
+        
+        # --- 修正箇所: quantity=1 を追加しました ---
+        # これでデータベースの「個数必須」ルールを守れます
+        Order.create(
+            user=user_id, 
+            product=product_id, 
+            order_date=order_date, 
+            quantity=1
+        )
+        
         Order.create(user=user_id, product=product_id, order_date=order_date,quantity=quantity)
         return redirect(url_for('order.list'))
     
@@ -38,6 +50,8 @@ def edit(order_id):
     if request.method == 'POST':
         order.user = request.form['user_id']
         order.product = request.form['product_id']
+        # 編集時も必要であればここで order.quantity = ... を更新できますが、
+        # 今回のエラー回避には影響しないためそのままでOKです
         #追加点個数を上書き保存
         order.quantity = request.form['quantity']
         order.save()
