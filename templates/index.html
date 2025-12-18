@@ -82,6 +82,8 @@
             position: relative;
             height: 400px;
             width: 100%;
+        }
+    </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         .charts-container {
@@ -174,10 +176,16 @@
         </div>
     </div>
 
+    <!-- データをdata属性として埋め込む -->
+    <div id="ranking-data" 
+         data-ranking='{{ ranking_data | tojson | default([]) }}'
+         style="display: none;"></div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // app.py からデータ受け取り
-            const rankingData = {{ ranking_data | tojson | default([]) }};
+            const rankingDataElement = document.getElementById('ranking-data');
+            const rankingData = JSON.parse(rankingDataElement.getAttribute('data-ranking'));
 
             // ラベルとデータの作成
             const labels = rankingData.map(item => item.name);
@@ -247,12 +255,8 @@
                     }
                 }
             });
-    <h1>注文管理システム</h1>
-    <ul>
-      <li><a href="{{ url_for('user.list') }}">ユーザー（顧客）</a></li>
-      <li><a href="{{ url_for('product.list') }}">製品</a></li>
-      <li><a href="{{ url_for('order.list') }}">注文</a></li>
-    </ul>
+        });
+    </script>
 
     <!-- 統計情報カード -->
     <div class="stats-container">

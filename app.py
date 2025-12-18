@@ -52,7 +52,6 @@ def index():
             'total': int(user.total_sales or 0)
         })
 
-    return render_template('index.html', ranking_data=ranking_data)
     # 製品のランキングデータ（売上数量で集計）
     product_ranking = []
     try:
@@ -154,6 +153,7 @@ def index():
         }
     
     return render_template('index.html', 
+                         ranking_data=ranking_data,
                          product_ranking=product_ranking,
                          monthly_sales=monthly_sales,
                          daily_sales=daily_sales,
