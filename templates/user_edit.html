@@ -16,6 +16,8 @@
     <form action="{{ url_for('user.edit', user_id=user.id) }}" method="post">
         <label>名前: <input type="text" name="name" value="{{ user.name }}" required></label><br>
         <label>年齢: <input type="number" name="age" value="{{ user.age }}" required></label><br>
+        <label>メールアドレス: <input type="email" name="email" value="{{ user.email or '' }}"></label><br>
+        <label>住所: <input type="text" name="address" value="{{ user.address or '' }}"></label><br>
         <button type="submit">保存</button>
     </form>
 </body>
