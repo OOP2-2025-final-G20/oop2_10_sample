@@ -1,16 +1,56 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-    <meta charset="UTF-8">
-    <title>注文管理システム</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+  <meta charset="UTF-8">
+  <title>注文管理システム</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
 </head>
+
 <body>
-    <h1>注文管理システム</h1>
-    <ul>
-      <li><a href="{{ url_for('user.list') }}">ユーザー（顧客）</a></li>
-      <li><a href="{{ url_for('product.list') }}">製品</a></li>
-      <li><a href="{{ url_for('order.list') }}">注文</a></li>
-    </ul>
+
+  <h1>注文管理システム</h1>
+
+  <ul>
+    <li><a href="{{ url_for('user.list') }}">ユーザー（顧客）</a></li>
+    <li><a href="{{ url_for('product.list') }}">製品</a></li>
+    <li><a href="{{ url_for('order.list') }}">注文</a></li>
+  </ul>
+
+  <!-- =========================
+         ダッシュボード（最下部）
+         ========================= -->
+  <hr>
+
+  <h2>直近20件の注文</h2>
+
+  {% if recent_orders and recent_orders|length > 0 %}
+
+  <table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+      <tr>
+        <th>顧客名</th>
+        <th>製品名</th>
+        <th>個数</th>
+        <th>注文日時</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in recent_orders %}
+      <tr>
+        <td>{{ order.user.name }}</td>
+        <td>{{ order.product.name }}</td>
+        <td>{{ order.quantity }}</td>
+        <td>{{ order.order_date }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% else %}
+  <p>注文データがありません。</p>
+  {% endif %}
+
 </body>
+
 </html>

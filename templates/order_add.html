@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <title>注文追加</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
 </head>
+
 <body>
     <h1>新しい注文を追加</h1>
     <ul class="breadcrumb">
@@ -12,23 +14,27 @@
         <li><a href="{{ url_for('order.list') }}">注文一覧</a></li>
         <li>新規注文</li>
     </ul>
-    
+
     <form action="{{ url_for('order.add') }}" method="post">
-        <label>ユーザー: 
+        <label>ユーザー:
             <select name="user_id" required>
                 {% for user in users %}
-                    <option value="{{ user.id }}">{{ user.name }}</option>
+                <option value="{{ user.id }}">{{ user.name }}</option>
                 {% endfor %}
             </select>
         </label><br>
-        <label>製品: 
+        <label>製品:
             <select name="product_id" required>
                 {% for product in products %}
-                    <option value="{{ product.id }}">{{ product.name }}</option>
+                <option value="{{ product.id }}">{{ product.name }}</option>
                 {% endfor %}
             </select>
+        </label><br>
+        <label>個数:
+            <input type="number" name="quantity" value="1" min="1" required>
         </label><br>
         <button type="submit">追加</button>
     </form>
 </body>
+
 </html>
