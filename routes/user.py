@@ -20,7 +20,9 @@ def add():
     if request.method == 'POST':
         name = request.form['name']
         age = request.form['age']
-        User.create(name=name, age=age)
+        email = request.form.get('email', '')
+        address = request.form.get('address', '')
+        User.create(name=name, age=age, email=email if email else None, address=address if address else None)
         return redirect(url_for('user.list'))
     
     return render_template('user_add.html')
@@ -35,7 +37,17 @@ def edit(user_id):
     if request.method == 'POST':
         user.name = request.form['name']
         user.age = request.form['age']
+        user.email = request.form.get('email', '') or None
+        user.address = request.form.get('address', '') or None
         user.save()
         return redirect(url_for('user.list'))
 
     return render_template('user_edit.html', user=user)
+
+
+@user_bp.route('/delete/<int:user_id>', methods=['POST'])
+def delete(user_id):
+    user = User.get_or_none(User.id == user_id)
+    if user:
+        user.delete_instance()
+    return redirect(url_for('user.list'))

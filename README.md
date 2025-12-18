@@ -1,8 +1,10 @@
-# アプリ名: oop2_10_sample
-> アプリ名は、プロジェクトの顔でもあるので、適切な命名を行ってください。
+# OMS: OMS（Order Manegiment System）
+
 
 概要:
-> 概要には、このアプリで何ができるのかを簡潔に書きましょう。
+> このアプリで何ができるのか
+> このアプリでは、すでに入力してあるものに対してグラフを作成してくれる。
+> また新規顧客・新規製品・新規注文を受け付けることができる。
 
 第10回 講義内資料サンプルコード
 
@@ -34,6 +36,12 @@ peewee==3.17.7
 > このリポジトリのアプリを動作させるために行う手順を詳細に書いてください。
 
 ```bash
+$ python -m venv env
+$ source env/bin/activate
+$ pip install -r requirements.txt
 $ python app.py
-# Try accessing "http://localhost:8080" in your browser.
 ```
+
+## プログラミングのルール<br>
+- ブランチ名は各人の名簿番号にする<br>
+

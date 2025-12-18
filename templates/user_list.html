@@ -23,6 +23,11 @@
                 <th style="padding: 10px; text-align: left; width: 150px;">&nbsp;</th>
                 <th style="padding: 10px; text-align: left;">名前</th>
                 <th style="padding: 10px; text-align: left;">年齢</th>
+                <th>&nbsp;</th>
+                <th>名前</th>
+                <th>年齢</th>
+                <th>メールアドレス</th>
+                <th>住所</th>
             </tr>
         </thead>
         <tbody style="display: table-row-group;">
@@ -35,6 +40,17 @@
                 </td>
                 <td style="padding: 10px;">{{ user.name }}</td>
                 <td style="padding: 10px;">{{ user.age }}</td>
+            <tr>
+                <td>
+                    <a href="{{ url_for('user.edit', user_id=user.id) }}">編集</a>
+                    <form method="POST" action="{{ url_for('user.delete', user_id=user.id) }}" style="display: inline;" onsubmit="return confirm('本当に削除しますか？');">
+                        <button type="submit">削除</button>
+                    </form>
+                </td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.age }}</td>
+                <td>{{ user.email or '-' }}</td>
+                <td>{{ user.address or '-' }}</td>
             </tr>
             {% endfor %}
         </tbody>
