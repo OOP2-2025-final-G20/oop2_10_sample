@@ -2,34 +2,43 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>データ一覧</title>
+    <title>顧客一覧</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
 </head>
 <body>
-    <h1>{{ title }}</h1>
+    <h1>顧客一覧</h1>
+
     <ul class="breadcrumb">
         <li><a href="{{ url_for('index') }}">HOME</a></li>
-        <li><a href="{{ url_for('user.list') }}">ユーザー一覧</a></li>
+        <li>顧客一覧</li>
     </ul>
 
-    <a href="{{ url_for('user.add') }}">新規ユーザー追加</a>
-    <table>
-        <thead>
+    <div style="margin-bottom: 15px;">
+        <a href="{{ url_for('user.add') }}">新規顧客追加</a>
+    </div>
+
+    <table border="1" style="width: 100%; border-collapse: collapse; border: 1px solid #ddd; display: table;">
+        <thead style="background-color: #f2f2f2; display: table-header-group;">
             <tr>
-                <th>&nbsp;</th>
-                <th>名前</th>
-                <th>年齢</th>
+                <th style="padding: 10px; text-align: left; width: 150px;">&nbsp;</th>
+                <th style="padding: 10px; text-align: left;">名前</th>
+                <th style="padding: 10px; text-align: left;">年齢</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody style="display: table-row-group;">
             {% for user in items %}
-            <tr>
-                <td><a href="{{ url_for('user.edit', user_id=user.id) }}">編集</a></td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.age }}</td>
+            <tr style="border-bottom: 1px solid #ddd; display: table-row;">
+                <td style="padding: 10px;">
+                    <a href="{{ url_for('user.edit', user_id=user.id) }}">編集</a>
+                    <span> | </span>
+                    <a href="#" style="color: blue;">削除</a>
+                </td>
+                <td style="padding: 10px;">{{ user.name }}</td>
+                <td style="padding: 10px;">{{ user.age }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+
 </body>
 </html>

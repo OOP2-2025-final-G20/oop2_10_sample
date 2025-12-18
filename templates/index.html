@@ -2,15 +2,146 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>注文管理システム</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注文管理システム - ダッシュボード</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* 全体のレイアウト調整 */
+        body {
+            font-family: "Helvetica Neue", Arial, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column; /* 縦並びにする */
+            align-items: center;    /* 中央揃え */
+        }
+
+        /* メニュー部分のスタイル調整 */
+        .nav-container {
+            width: 90%;
+            max-width: 800px;
+            margin-bottom: 20px;
+            text-align: left; /* メニューは左寄せ（お好みで変更可） */
+        }
+
+        /* グラフカードのスタイル */
+        .chart-card {
+            background-color: #fff;
+            width: 90%;
+            max-width: 800px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 0;
+            color: #333;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-    <h1>注文管理システム</h1>
-    <ul>
-      <li><a href="{{ url_for('user.list') }}">ユーザー（顧客）</a></li>
-      <li><a href="{{ url_for('product.list') }}">製品</a></li>
-      <li><a href="{{ url_for('order.list') }}">注文</a></li>
-    </ul>
+
+    <div class="nav-container">
+        <h1>注文管理システム</h1>
+        <ul>
+            <li><a href="{{ url_for('user.list') }}">ユーザー（顧客）</a></li>
+            <li><a href="{{ url_for('product.list') }}">製品</a></li>
+            <li><a href="{{ url_for('order.list') }}">注文</a></li>
+        </ul>
+    </div>
+
+    <div class="chart-card">
+        <h2>顧客ランキング (TOP5)</h2>
+        <div class="chart-container">
+            <canvas id="customerRankingChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // app.py からデータ受け取り
+            const rankingData = {{ ranking_data | tojson | default([]) }};
+
+            // ラベルとデータの作成
+            const labels = rankingData.map(item => item.name);
+            const dataValues = rankingData.map(item => item.total);
+
+            const ctx = document.getElementById('customerRankingChart').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: dataValues,
+                        backgroundColor: [
+                            'rgb(54, 162, 235)', // 青
+                            'rgb(255, 99, 132)', // 赤
+                            'rgb(255, 159, 64)', // オレンジ
+                            'rgb(255, 205, 86)', // 黄
+                            'rgb(75, 192, 192)'  // 緑
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '50%',
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                boxWidth: 15,
+                                font: { size: 14 },
+                                padding: 20,
+                                generateLabels: function(chart) {
+                                    const data = chart.data;
+                                    if (data.labels.length && data.datasets.length) {
+                                        return data.labels.map((label, i) => {
+                                            const value = data.datasets[0].data[i];
+                                            const fillStyle = data.datasets[0].backgroundColor[i];
+                                            return {
+                                                text: `${label}: ${value.toLocaleString()}円`,
+                                                fillStyle: fillStyle,
+                                                strokeStyle: fillStyle,
+                                                lineWidth: 1,
+                                                hidden: isNaN(value) || chart.getDatasetMeta(0).data[i].hidden,
+                                                index: i
+                                            };
+                                        });
+                                    }
+                                    return [];
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) { label += ': '; }
+                                    if (context.parsed !== null) {
+                                        label += context.parsed.toLocaleString() + '円';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
