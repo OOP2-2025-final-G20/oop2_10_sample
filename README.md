@@ -22,9 +22,9 @@
 注文履歴と製品単価をプログラムが掛け合わせて顧客ごとに合計金額を計算している。Chart.jsのライブラリを用いて描画をさせている。新規注文画面からデータを追加すると、即座にトップページのグラフ（上位5社）も再計算されて更新されるようにした。
 作成された注文内容をデータベースから取得し、最新20件分の顧客、製品、個数、注文日時を表示させている。
 <img width="2940" height="1614" alt="Image" src="https://github.com/user-attachments/assets/1a450cc0-96fc-4454-ab9e-271e847363f4" />
+<img width="1470" height="833" alt="Image" src="https://github.com/user-attachments/assets/4ae398f9-105c-4f65-aac0-e2e600c45031" />
 <img width="993" height="768" alt="Image" src="https://github.com/user-attachments/assets/1d9aa998-492f-474f-913f-e026ff323d1f" />
 <img width="1168" height="661" alt="Image" src="https://github.com/user-attachments/assets/f02bfd23-d844-43f0-94ad-230ed585bbcb" />
-<img width="1470" height="833" alt="Image" src="https://github.com/user-attachments/assets/4ae398f9-105c-4f65-aac0-e2e600c45031" />
 <img width="1440" height="900" alt="Image" src="https://github.com/user-attachments/assets/7491a964-57e2-4080-91ee-a46df3364e03" />
 
 
